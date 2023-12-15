@@ -1,0 +1,16 @@
+numpy
+tqdm
+more-itertools
+transformers>=4.19.0
+ffmpeg-python==0.2.0
+click
+pyaudio
+SpeechRecognition
+pydub
+ffmpeg-python
+torch
+playsound==1.2.2
+gtts
+openai
+openai-whisper
+chronological
