@@ -3,7 +3,6 @@ from openai import OpenAI
 from chronological import read_prompt
 import whisper
 import queue
-import tempfile
 import threading
 from playsound import playsound
 from gtts import gTTS
@@ -11,20 +10,22 @@ import torch
 from recordingFunc import record_audio, transcribe_forever
 
 characterName = "Assistant"
+micLanguage = 'english'
 language = 'en'
 
-torch.set_default_dtype(torch.float32)
+if (torch.cuda.is_available()):
+    device = "cuda"
+else:
+    device = "cpu"
 
-def getMic(save_file):
-    temp_dir = tempfile.mkdtemp() if save_file else None
-
-    audio_model = whisper.load_model("base")
+def getMic():
+    audio_model = whisper.load_model("base", device)
     audio_queue = queue.Queue()
     result_queue = queue.Queue()
     threading.Thread(target=record_audio,
-                     args=(audio_queue, 300, 0.8, False, False, temp_dir)).start()
+                     args=(audio_queue, 300, 0.8, False)).start()
     threading.Thread(target=transcribe_forever,
-                     args=(audio_queue, result_queue, audio_model, False, False, False)).start()
+                     args=(audio_queue, result_queue, audio_model, micLanguage, False)).start()
 
     return result_queue.get()
 
@@ -48,7 +49,7 @@ thread = client.beta.threads.create()
 
 while True:
     
-    question.insert(i, getMic(False))
+    question.insert(i, getMic())
 
     print("Me:" + question[i])
 
