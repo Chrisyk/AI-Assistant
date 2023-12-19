@@ -1,11 +1,11 @@
 # AI-Assistant
-Python <= 3.11.0  
+Python <= 3.9.0  
 ## Description
-Uses whisper AI to process the user's voice and outputs a TTS synthetic voice. The program runs in combination with OpenAI's API  
+Uses whisper AI to process the user's voice and outputs a TTS synthetic voice using Open AI's new agent API.
 ## Features
 - Multiple languages
 - Multiple characters  
 ## Usage
-1. Have an OpenAI key
+1. Set up OpenAI key in path
 2. Install dependencies
 3. run main.py
